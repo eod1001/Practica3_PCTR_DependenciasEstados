@@ -1,11 +1,12 @@
-package p03.c01;
+package src.p03.c01;
 
 import java.util.Enumeration;
 import java.util.Hashtable;
 
 public class Parque implements IParque{
 
-	// TODO 
+	// TODO
+	
 	private int contadorPersonasTotales;
 	private Hashtable<String, Integer> contadoresPersonasPuerta;
 	
@@ -70,7 +71,9 @@ public class Parque implements IParque{
 	protected void checkInvariante() {
 		assert sumarContadoresPuerta() == contadorPersonasTotales : "INV: La suma de contadores de las puertas debe ser igual al valor del contador del parte";
 		// TODO 
+		assert comprobarAntesDeEntrar() == contadorPersonasTotales : "INV: La suma de contadores de las puertas debe ser igual al valor del contador del parte";
 		// TODO
+		assert comprobarAntesDeSalir() == contadorPersonasTotales : "INV: La suma de contadores de las puertas debe ser igual al valor del contador del parte";
 	}
 
 	protected void comprobarAntesDeEntrar(){	// TODO
