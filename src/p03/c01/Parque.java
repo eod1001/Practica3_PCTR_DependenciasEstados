@@ -8,13 +8,14 @@ public class Parque implements IParque{
 	// TODO
 	
 	private int contadorPersonasTotales;
-	private Hashtable<String, Integer> contadoresPersonasPuerta;
-	
+	private Hashtable<String, Integer> contadoresPersonasPuertaEntrada;
+	private Hashtable<String, Integer> contadoresPersonasPuertaSalida;
 	
 	public Parque() {	// TODO
 		contadorPersonasTotales = 0;
-		contadoresPersonasPuerta = new Hashtable<String, Integer>();
+		contadoresPersonasPuertaEntrada = new Hashtable<String, Integer>();
 		// TODO
+		contadoresPersonasPuertaSalida = new Hashtable<String, Integer>();
 	}
 
 
@@ -22,8 +23,8 @@ public class Parque implements IParque{
 	public void entrarAlParque(String puerta){		// TODO
 		
 		// Si no hay entradas por esa puerta, inicializamos
-		if (contadoresPersonasPuerta.get(puerta) == null){
-			contadoresPersonasPuerta.put(puerta, 0);
+		if (contadoresPersonasPuertaEntrada.get(puerta) == null){
+			contadoresPersonasPuertaEntrada.put(puerta, 0);
 		}
 		
 		// TODO
@@ -31,7 +32,7 @@ public class Parque implements IParque{
 		
 		// Aumentamos el contador total y el individual
 		contadorPersonasTotales++;		
-		contadoresPersonasPuerta.put(puerta, contadoresPersonasPuerta.get(puerta)+1);
+		contadoresPersonasPuertaEntrada.put(puerta, contadoresPersonasPuertaEntrada.get(puerta)+1);
 		
 		// Imprimimos el estado del parque
 		imprimirInfo(puerta, "Entrada");
@@ -40,13 +41,37 @@ public class Parque implements IParque{
 		
 		
 		// TODO
-		
+		//Invariante
+		   checkInvariante();
 	}
 	
 	// 
 	// TODO Método salirDelParque
 	//
-	
+	@Override
+	public void salirDelParque(String puerta){		// TODO
+		
+		// Si no hay salidas por esa puerta, inicializamos
+		if (contadoresPersonasPuertaSalida.get(puerta) == null){
+			contadoresPersonasPuertaSalida.put(puerta, 0); 
+		}
+		
+		// TODO
+				
+		
+		// Aumentamos el contador total y el individual
+		contadorPersonasTotales++;		
+		contadoresPersonasPuertaSalida.put(puerta, contadoresPersonasPuertaSalida.get(puerta)+1);
+		
+		// Imprimimos el estado del parque
+		imprimirInfo(puerta, "Entrada");
+		
+		// TODO
+		
+		
+		// TODO
+		checkInvariante();
+	}
 	
 	private void imprimirInfo (String puerta, String movimiento){
 		System.out.println(movimiento + " por puerta " + puerta);
@@ -76,15 +101,15 @@ public class Parque implements IParque{
 		assert comprobarAntesDeSalir() == contadorPersonasTotales : "INV: La suma de contadores de las puertas debe ser igual al valor del contador del parte";
 	}
 
-	protected void comprobarAntesDeEntrar(){	// TODO
+	protected int comprobarAntesDeEntrar(){	// TODO
 		//
-		// TODO
+		// TODO  wait
 		//
 	}
 
-	protected void comprobarAntesDeSalir(){		// TODO
+	protected int comprobarAntesDeSalir(){		// TODO
 		//
-		// TODO
+		// TODO notifyall
 		//
 	}
 
