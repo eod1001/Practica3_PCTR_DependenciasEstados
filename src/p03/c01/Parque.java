@@ -27,10 +27,15 @@ public class Parque implements IParque{
 		if (contadoresPersonasPuerta.get(puerta) == null){
 			contadoresPersonasPuerta.put(puerta, 0);
 		}
-		
+		/*
 		// TODO
-		comprobarAntesDeEntrar();		
-		
+		try {
+			comprobarAntesDeEntrar();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}		
+		*/
 		// Aumentamos el contador total y el individual
 		contadorPersonasTotales++;		
 		contadoresPersonasPuerta.put(puerta, contadoresPersonasPuerta.get(puerta)+1);
@@ -42,7 +47,7 @@ public class Parque implements IParque{
 		checkInvariante();
 		
 		// TODO
-		
+		notify();
 	}
 	
 	// 
@@ -51,26 +56,27 @@ public class Parque implements IParque{
 	@Override
 	public synchronized void salirDelParque(String puerta){		// TODO
 		
-		// Si no hay entradas por esa puerta, inicializamos
-		if (contadoresPersonasPuerta.get(puerta) == null){
-			contadoresPersonasPuerta.put(puerta, 0);
-		}
 		
-		// TODO
-		comprobarAntesDeEntrar();		
-		
+	/*	// TODO
+		try {
+			comprobarAntesDeSalir();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}		
+*/		
 		// Aumentamos el contador total y el individual
-		contadorPersonasTotales++;		
-		contadoresPersonasPuerta.put(puerta, contadoresPersonasPuerta.get(puerta)+1);
+		contadorPersonasTotales--;		
+		contadoresPersonasPuerta.put(puerta, contadoresPersonasPuerta.get(puerta)-1);
 		
 		// Imprimimos el estado del parque
-		imprimirInfo(puerta, "Entrada");
+		imprimirInfo(puerta, "Salida");
 		
 		// TODO
 		checkInvariante();
 		
 		// TODO
-		
+		notify();
 	}
 	
 	private void imprimirInfo (String puerta, String movimiento){
@@ -101,16 +107,20 @@ public class Parque implements IParque{
 		assert contadorPersonasTotales >= 0 : "INV: El nº de personas en el parque no puede ser menor que 0";
 	}
 
-	protected void comprobarAntesDeEntrar(){	// TODO
+	protected void comprobarAntesDeEntrar() throws InterruptedException{	// TODO
 		//
 		// TODO
 		//
+		while(contadorPersonasTotales==aforo_maximo)
+			wait();
 	}
 
-	protected void comprobarAntesDeSalir(){		// TODO
+	protected void comprobarAntesDeSalir() throws InterruptedException{		// TODO
 		//
 		// TODO
 		//
+		while(contadorPersonasTotales==0)
+			wait();
 	}
 
 
