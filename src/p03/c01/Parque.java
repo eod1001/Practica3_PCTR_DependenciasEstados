@@ -27,7 +27,7 @@ public class Parque implements IParque{
 		if (contadoresPersonasPuerta.get(puerta) == null){
 			contadoresPersonasPuerta.put(puerta, 0);
 		}
-		/*
+		
 		// TODO
 		try {
 			comprobarAntesDeEntrar();
@@ -35,7 +35,7 @@ public class Parque implements IParque{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}		
-		*/
+		
 		// Aumentamos el contador total y el individual
 		contadorPersonasTotales++;		
 		contadoresPersonasPuerta.put(puerta, contadoresPersonasPuerta.get(puerta)+1);
@@ -56,16 +56,21 @@ public class Parque implements IParque{
 	@Override
 	public synchronized void salirDelParque(String puerta){		// TODO
 		
+		// Si no hay entradas por esa puerta, inicializamos
+				if (contadoresPersonasPuerta.get(puerta) == null){
+					contadoresPersonasPuerta.put(puerta, 0);
+				}
+				
 		
-	/*	// TODO
+		// TODO
 		try {
 			comprobarAntesDeSalir();
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}		
-*/		
-		// Aumentamos el contador total y el individual
+		
+		// Disminuimos el contador total y el individual
 		contadorPersonasTotales--;		
 		contadoresPersonasPuerta.put(puerta, contadoresPersonasPuerta.get(puerta)-1);
 		
