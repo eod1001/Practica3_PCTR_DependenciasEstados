@@ -7,19 +7,21 @@ public class Parque implements IParque{
 
 
 	// TODO 
+	private int aforo_maximo;
 	private int contadorPersonasTotales;
 	private Hashtable<String, Integer> contadoresPersonasPuerta;
 	
 	
-	public Parque() {	// TODO
+	public Parque(int aforo) {	// TODO
 		contadorPersonasTotales = 0;
 		contadoresPersonasPuerta = new Hashtable<String, Integer>();
 		// TODO
+		aforo_maximo=aforo;
 	}
 
 
 	@Override
-	public void entrarAlParque(String puerta){		// TODO
+	public synchronized void entrarAlParque(String puerta){		// TODO
 		
 		// Si no hay entradas por esa puerta, inicializamos
 		if (contadoresPersonasPuerta.get(puerta) == null){
@@ -27,7 +29,7 @@ public class Parque implements IParque{
 		}
 		
 		// TODO
-				
+		comprobarAntesDeEntrar();		
 		
 		// Aumentamos el contador total y el individual
 		contadorPersonasTotales++;		
@@ -37,7 +39,7 @@ public class Parque implements IParque{
 		imprimirInfo(puerta, "Entrada");
 		
 		// TODO
-		
+		checkInvariante();
 		
 		// TODO
 		
@@ -71,8 +73,9 @@ public class Parque implements IParque{
 	protected void checkInvariante() {
 		assert sumarContadoresPuerta() == contadorPersonasTotales : "INV: La suma de contadores de las puertas debe ser igual al valor del contador del parte";
 		// TODO 
-		
+		assert contadorPersonasTotales <= aforo_maximo : "INV: El nº de personas en el parque no puede superar el aforo";
 		// TODO
+		assert contadorPersonasTotales >= 0 : "INV: El nº de personas en el parque no puede ser menor que 0";
 	}
 
 	protected void comprobarAntesDeEntrar(){	// TODO
