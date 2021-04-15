@@ -6,33 +6,32 @@ import java.util.Hashtable;
 public class Parque implements IParque{
 
 
-	// TODO 
+	// La variable aforo_maximo indica el numero maximo de personas que entra en el parque 
 	private int aforo_maximo;
 	private int contadorPersonasTotales;
 	private Hashtable<String, Integer> contadoresPersonasPuerta;
 	
 	
-	public Parque(int aforo) {	// TODO
+	public Parque(int aforo) {	//El constructor recibe como parámetro el aforo máximo del parque
 		contadorPersonasTotales = 0;
 		contadoresPersonasPuerta = new Hashtable<String, Integer>();
-		// TODO
+		//Asignamos a la variable aforo maximo el dato pasado como argumento
 		aforo_maximo=aforo;
 	}
 
 
 	@Override
-	public synchronized void entrarAlParque(String puerta){		// TODO
+	public synchronized void entrarAlParque(String puerta){	//El metodo entrarAlParque debe estar sincronizado para evitar dos accesos del parque a la vez
 		
 		// Si no hay entradas por esa puerta, inicializamos
 		if (contadoresPersonasPuerta.get(puerta) == null){
 			contadoresPersonasPuerta.put(puerta, 0);
 		}
 		
-		// TODO
+		//Comprobación de las pre-condiciones
 		try {
 			comprobarAntesDeEntrar();
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}		
 		
@@ -43,30 +42,28 @@ public class Parque implements IParque{
 		// Imprimimos el estado del parque
 		imprimirInfo(puerta, "Entrada");
 		
-		// TODO
+		// Comprobación de post-condiciones
 		checkInvariante();
 		
-		// TODO
-		notify();
+		// Notificamos al resto de hilos que estan en espera
+		notifyAll();
 	}
 	
 	// 
-	// TODO Método salirDelParque
+	// Método salirDelParque
 	//
 	@Override
-	public synchronized void salirDelParque(String puerta){		// TODO
+	public synchronized void salirDelParque(String puerta){ //El metodo salirDelParque debe estar sincronizado para evitar dos salidas del parque a la vez
 		
-		// Si no hay entradas por esa puerta, inicializamos
+		// Si no hay entradas o salidas por esa puerta, inicializamos
 				if (contadoresPersonasPuerta.get(puerta) == null){
 					contadoresPersonasPuerta.put(puerta, 0);
 				}
-				
-		
-		// TODO
+			
+		// Comprobacion pre-condiciones
 		try {
 			comprobarAntesDeSalir();
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}		
 		
@@ -77,11 +74,11 @@ public class Parque implements IParque{
 		// Imprimimos el estado del parque
 		imprimirInfo(puerta, "Salida");
 		
-		// TODO
+		// Comprobacion de las post-condiciones
 		checkInvariante();
 		
-		// TODO
-		notify();
+		// // Notificamos al resto de hilos que estan en espera
+		notifyAll();
 	}
 	
 	private void imprimirInfo (String puerta, String movimiento){
@@ -106,15 +103,15 @@ public class Parque implements IParque{
 	
 	protected void checkInvariante() {
 		assert sumarContadoresPuerta() == contadorPersonasTotales : "INV: La suma de contadores de las puertas debe ser igual al valor del contador del parte";
-		// TODO 
+		// El número de personas en el parque nunca podrá superar el aforo máximo permitido 
 		assert contadorPersonasTotales <= aforo_maximo : "INV: El nº de personas en el parque no puede superar el aforo";
-		// TODO
+		// El número de personas en el parque no puede ser menor que 0, es fisicamente imposible
 		assert contadorPersonasTotales >= 0 : "INV: El nº de personas en el parque no puede ser menor que 0";
 	}
 
-	protected void comprobarAntesDeEntrar() throws InterruptedException{	// TODO
+	protected void comprobarAntesDeEntrar() throws InterruptedException{
 		//
-		// TODO
+		// En caso de no haber espacio en el parque, el hilo se queda en espera hasta que haya una nueva salida. 
 		//
 		while(contadorPersonasTotales==aforo_maximo)
 			wait();
@@ -122,7 +119,7 @@ public class Parque implements IParque{
 
 	protected void comprobarAntesDeSalir() throws InterruptedException{		// TODO
 		//
-		// TODO
+		// En caso de no haber personas en el parque, el hilo se queda en espera hasta que haya una nueva entrada
 		//
 		while(contadorPersonasTotales==0)
 			wait();

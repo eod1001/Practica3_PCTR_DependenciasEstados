@@ -3,7 +3,7 @@ package src.p03.c01;
 public class SistemaLanzador {
 	public static void main(String[] args) {
 		
-		IParque parque = new Parque(5); // TODO
+		IParque parque = new Parque(50); //Se pasa como argumento el aforo máximo del parque
 		char letra_puerta = 'A';
 		
 		System.out.println("¡Parque abierto!");
@@ -16,9 +16,6 @@ public class SistemaLanzador {
 			ActividadEntradaPuerta entradas = new ActividadEntradaPuerta(puerta, parque);
 			new Thread (entradas).start();
 			
-			// 
-			// TODO
-			//
 			// Creacion de hilos de salida
 			ActividadSalidaPuerta salidas = new ActividadSalidaPuerta(puerta, parque);
 			new Thread (salidas).start();
